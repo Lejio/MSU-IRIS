@@ -9,7 +9,7 @@ declare global {
     Presence: {
       // Example, real-time cursor coordinates
       // cursor: { x: number; y: number };
-      cursor: { line: number; col: number };
+      cursor: { line: number; col: number, x: number, y: number };
     };
 
     // The Storage tree for the room, for useMutation, useStorage, etc.

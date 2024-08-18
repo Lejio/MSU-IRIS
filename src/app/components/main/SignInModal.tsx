@@ -1,7 +1,7 @@
 import React from 'react'
 import SignInHeader from './SignInHeader'
 import GoogleButton from './GoogleButton'
-import { Span } from 'next/dist/trace'
+import LogoutButton from './LogoutButton'
 
 export default function SignInModal() {
   return (
@@ -17,6 +17,7 @@ export default function SignInModal() {
                 Test
             </span>
         </GoogleButton>
+        <LogoutButton />
       </div>
     </div>
   )

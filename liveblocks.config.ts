@@ -4,8 +4,8 @@ type UserInfo = {
   email: string | undefined;
   color: string;
   picture: string;
-  x: number;
-  y: number;
+  line: number;
+  col: number;
 };
 
 export type UserAwareness = {

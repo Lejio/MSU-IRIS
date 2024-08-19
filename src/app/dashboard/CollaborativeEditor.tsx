@@ -110,6 +110,10 @@ export function CollaborativeEditor() {
     const handleOnMount = useCallback((e: editor.IStandaloneCodeEditor) => {
       setEditorRef(e);
     }, []);
+
+    // editorRef?.onDidChangeCursorSelection((e) => {
+    //     console.log(e);
+    // });
   
     return (
       <div className=" w-[100vw] h-[100vh]">

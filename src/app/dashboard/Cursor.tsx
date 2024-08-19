@@ -133,28 +133,160 @@
 //     </>
 // )
 // }
+
+
+
+// 'use client'
+// import { useEffect, useState } from "react";
+// import { useSelf } from "@liveblocks/react/suspense";
+// import { AwarenessList, UserAwareness } from "../../../liveblocks.config";
+// import { LiveblocksYjsProvider } from "@liveblocks/yjs";
+// import { editor } from "monaco-editor";// import Caret from "./Caret";
+
+
+// type CaretProps = {
+//     color: string;
+//     line: number;
+//     col: number;
+//     height: number;
+//     };
+    
+// function Caret({ color, line, col, height }: CaretProps) {
+//     return (
+//         <div
+//         style={{
+//             position: "absolute",
+//             left: `${line}px`,
+//             top: `${col}px`,
+//             width: "2px", // Width of the caret
+//             height: `${height}`, // Height of the caret
+//             backgroundColor: color,
+//             zIndex: 1000,
+//             pointerEvents: "none",
+//             animation: "blink 1s step-end infinite", // Blinking animation
+//         }}
+//         />
+// );
+// }
+
+// type yProviderProps = {
+//   yProvider: LiveblocksYjsProvider;
+//   editor: editor.IStandaloneCodeEditor; // Pass the Monaco editor instance
+// };
+
+// export function Cursors({ yProvider, editor }: yProviderProps) {
+//   const userInfo = useSelf((me) => me.info);
+//   const [awarenessUsers, setAwarenessUsers] = useState<AwarenessList>([]);
+
+//   useEffect(() => {
+//     const localUser: UserAwareness["user"] = {
+//       ...userInfo,
+//     };
+//     yProvider.awareness.setLocalStateField("user", localUser);
+
+//     function setUsers() {
+//       setAwarenessUsers([...yProvider.awareness.getStates()] as AwarenessList);
+//     }
+
+//     yProvider.awareness.on("change", setUsers);
+//     setUsers();
+
+//     return () => {
+//       yProvider.awareness.off("change", setUsers);
+//     };
+//   }, [yProvider, userInfo]);
+
+// //   useEffect(() => {
+// //     if (!editor) return;
+
+//     // const updateCursorPosition = () => {
+//         // const position = editor.getPosition();
+//         // console.log(position)
+//     //   if (!position) return;
+
+//     //   const { left, top, height } = 
+
+//     // console.log(`Height: ${height}`)
+//     //   yProvider.awareness.setLocalStateField("user", {
+//     //     ...yProvider.awareness.getLocalState(),
+//     //     x: left,
+//     //     y: top + height!,
+//     //   });
+//     // };
+
+//     // const handleMouseLeave = () => {
+//     //     // Remove cursor when the mouse leaves the window
+//     //     yProvider.awareness.setLocalStateField("user", {
+//     //       ...yProvider.awareness.getLocalState(),
+//     //       x: null, // Set x and y to null or remove them to hide the cursor
+//     //       y: null,
+//     //     });
+//     //   };
+  
+//     //   // Listen for cursor movement and mouse leave events
+//     //   const cursorPositionChangeDisposable = editor.onDidChangeCursorPosition(updateCursorPosition);
+//     //   window.addEventListener("mouseleave", handleMouseLeave);
+  
+//     //   return () => {
+//     //     cursorPositionChangeDisposable.dispose();
+//     //     window.removeEventListener("mouseleave", handleMouseLeave);
+//     //   };
+// //   }, [editor, yProvider]);
+
+//   editor.onDidChangeCursorSelection((e: editor.ICursorSelectionChangedEvent) => {
+//     yProvider.awareness.setLocalStateField("user", {
+//         ...yProvider.awareness.getLocalState(),
+//         line: e.selection.getStartPosition().lineNumber,
+//         col: e.selection.getStartPosition().column,
+//     });
+// });
+
+
+//   return (
+//     <>
+//       {awarenessUsers.map(([clientId, client]) => {
+//         if (client?.user && client.user.email !== userInfo.email) {
+//             console.log(client.user.email, userInfo.email);
+//           return (
+//             <Caret
+//               key={clientId}
+//               color={client.user.color || "orangered"}
+//               line={client.user.line}
+//               col={client.user.col}
+//               height={18}
+//             />
+//           );
+//         }
+//         return null;
+//       })}
+//     </>
+//   );
+// }
+
+
 import { useEffect, useState } from "react";
 import { useSelf } from "@liveblocks/react/suspense";
 import { AwarenessList, UserAwareness } from "../../../liveblocks.config";
 import { LiveblocksYjsProvider } from "@liveblocks/yjs";
 import { editor } from "monaco-editor";// import Caret from "./Caret";
+import * as monaco from 'monaco-editor';
 
 
 type CaretProps = {
     color: string;
-    x: number;
-    y: number;
+    line: number;
+    col: number;
     };
     
-function Caret({ color, x, y }: CaretProps) {
+function Caret({ color, line, col }: CaretProps) {
     return (
         <div
         style={{
             position: "absolute",
-            left: `${x}px`,
-            top: `${y}px`,
+            left: `${line}px`,
+            top: `${col + 2}px`,
             width: "2px", // Width of the caret
-            height: "20px", // Height of the caret
+            height: "18px", // Height of the caret
             backgroundColor: color,
             zIndex: 1000,
             pointerEvents: "none",
@@ -172,6 +304,9 @@ type yProviderProps = {
 export function Cursors({ yProvider, editor }: yProviderProps) {
   const userInfo = useSelf((me) => me.info);
   const [awarenessUsers, setAwarenessUsers] = useState<AwarenessList>([]);
+  const editorLineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight);
+  
+//   console.log(`Line height: ${editorLineHeight}`)
 
   useEffect(() => {
     const localUser: UserAwareness["user"] = {
@@ -190,53 +325,35 @@ export function Cursors({ yProvider, editor }: yProviderProps) {
       yProvider.awareness.off("change", setUsers);
     };
   }, [yProvider, userInfo]);
-
-  useEffect(() => {
-    if (!editor) return;
-
-    const updateCursorPosition = () => {
-      const position = editor.getPosition();
-      if (!position) return;
-
-      const { left, top, height } = editor.getScrolledVisiblePosition(position) || { left: 0, top: 0 };
-
-      yProvider.awareness.setLocalStateField("user", {
-        ...yProvider.awareness.getLocalState(),
-        x: left,
-        y: top + height!,
-      });
-    };
-
-
-    const handleMouseLeave = () => {
-        // Remove cursor when the mouse leaves the window
-        yProvider.awareness.setLocalStateField("user", {
-          ...yProvider.awareness.getLocalState(),
-          x: null, // Set x and y to null or remove them to hide the cursor
-          y: null,
-        });
-      };
   
       // Listen for cursor movement and mouse leave events
-      const cursorPositionChangeDisposable = editor.onDidChangeCursorPosition(updateCursorPosition);
-      window.addEventListener("mouseleave", handleMouseLeave);
-  
-      return () => {
-        cursorPositionChangeDisposable.dispose();
-        window.removeEventListener("mouseleave", handleMouseLeave);
-      };
-  }, [editor, yProvider]);
+   editor.onDidChangeCursorPosition((e: editor.ICursorPositionChangedEvent) => {
+        const position = editor.getPosition();
+        if (!position) return;
+
+        const editorPosition = editor.getScrolledVisiblePosition(position);
+        if (editorPosition) {
+            const { top, left } = editorPosition;
+            console.log(top, left)
+            yProvider.awareness.setLocalStateField("user", {
+                ...yProvider.awareness.getLocalState(),
+                line: left,
+                col: top,
+            });
+        }
+    })
 
   return (
     <>
       {awarenessUsers.map(([clientId, client]) => {
         if (client?.user && client.user.email !== userInfo.email) {
+            console.log
           return (
             <Caret
               key={clientId}
               color={client.user.color || "orangered"}
-              x={client.user.x}
-              y={client.user.y}
+              line={client.user.line}
+              col={client.user.col}
             />
           );
         }
@@ -245,4 +362,3 @@ export function Cursors({ yProvider, editor }: yProviderProps) {
     </>
   );
 }
-

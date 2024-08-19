@@ -10,7 +10,7 @@ export default async function page() {
     if (!user.data.user) {
         redirect('/')
     }
-    console.log(user.data.user.user_metadata)
+    console.log(user.data.user.user_metadata.full_name)
   return (
     <div>
         Dashboard

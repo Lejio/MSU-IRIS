@@ -1,6 +1,18 @@
-import { LiveblocksProvider } from "@liveblocks/react";
-import Presence from "@liveblocks/react";
 // Define Liveblocks types for your application
+type UserInfo = {
+  name: string;
+  email: string | undefined;
+  color: string;
+  picture: string;
+  x: number;
+  y: number;
+};
+
+export type UserAwareness = {
+  user?: UserInfo;
+};
+
+export type AwarenessList = [number, UserAwareness][];
 
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
 declare global {
@@ -21,11 +33,7 @@ declare global {
     // Custom user info set when authenticating with a secret key
     UserMeta: {
       id: string;
-      info: {
-        // Example properties, for useSelf, useUser, useOthers, etc.
-        // name: string;
-        // avatar: string;
-      };
+      info: UserInfo;
     };
 
     // Custom events, for useBroadcastEvent, useEventListener

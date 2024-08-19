@@ -10,55 +10,110 @@ import { Editor } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
 import { MonacoBinding } from "y-monaco";
 import { Awareness } from "y-protocols/awareness";
+import { Cursors } from "./Cursor";
 // import { Cursors } from "@/components/Cursors";
 // import { Toolbar } from "@/components/Toolbar";
 
 // Collaborative code editor with undo/redo, live cursors, and live avatars
+// export function CollaborativeEditor() {
+//   const room = useRoom();
+//   const [provider, setProvider] = useState<LiveblocksYjsProvider>();
+//   const [editorRef, setEditorRef] = useState<editor.IStandaloneCodeEditor>();
+
+//   // Set up Liveblocks Yjs provider and attach Monaco editor
+//   useEffect(() => {
+//     let yProvider: LiveblocksYjsProvider;
+//     let yDoc: Y.Doc;
+//     let binding: MonacoBinding;
+
+//     if (editorRef) {
+//       yDoc = new Y.Doc();
+//       const yText = yDoc.getText("monaco");
+//       yProvider = new LiveblocksYjsProvider(room, yDoc);
+//       setProvider(yProvider);
+
+//       // Attach Yjs to Monaco
+//       binding = new MonacoBinding(
+//         yText,
+//         editorRef.getModel() as editor.ITextModel,
+//         new Set([editorRef]),
+//         yProvider.awareness as unknown as Awareness
+//       );
+//     }
+
+//     return () => {
+//       yDoc?.destroy();
+//       yProvider?.destroy();
+//       binding?.destroy();
+//     };
+//   }, [editorRef, room]);
+
+//   const handleOnMount = useCallback((e: editor.IStandaloneCodeEditor) => {
+//     setEditorRef(e);
+//   }, []);
+
+//   return (
+//     <div className=" w-[100vw] h-[100vh]">
+//       {provider ? <Cursors yProvider={provider} /> : null}
+//       {/* <div> */}
+//         {/* <div>{editorRef ? <Toolbar editor={editorRef} /> : null}</div> */}
+//         {/* <Avatars /> */}
+//       {/* </div> */}
+//       {/* <div> */}
+//         <Editor
+//           onMount={handleOnMount}
+//           height="100%"
+//           width="100hw"
+//           theme="vs-light"
+//           defaultLanguage="typescript"
+//           defaultValue=""
+//           options={{
+//             tabSize: 2,
+//             padding: { top: 20 },
+//           }}
+//         />
+//       {/* </div> */}
+//     </div>
+//   );
+// }
 export function CollaborativeEditor() {
-  const room = useRoom();
-  const [provider, setProvider] = useState<LiveblocksYjsProvider>();
-  const [editorRef, setEditorRef] = useState<editor.IStandaloneCodeEditor>();
-
-  // Set up Liveblocks Yjs provider and attach Monaco editor
-  useEffect(() => {
-    let yProvider: LiveblocksYjsProvider;
-    let yDoc: Y.Doc;
-    let binding: MonacoBinding;
-
-    if (editorRef) {
-      yDoc = new Y.Doc();
-      const yText = yDoc.getText("monaco");
-      yProvider = new LiveblocksYjsProvider(room, yDoc);
-      setProvider(yProvider);
-
-      // Attach Yjs to Monaco
-      binding = new MonacoBinding(
-        yText,
-        editorRef.getModel() as editor.ITextModel,
-        new Set([editorRef]),
-        yProvider.awareness as unknown as Awareness
-      );
-    }
-
-    return () => {
-      yDoc?.destroy();
-      yProvider?.destroy();
-      binding?.destroy();
-    };
-  }, [editorRef, room]);
-
-  const handleOnMount = useCallback((e: editor.IStandaloneCodeEditor) => {
-    setEditorRef(e);
-  }, []);
-
-  return (
-    <div className=" w-[100vw] h-[100vh]">
-      {/* {provider ? <Cursors yProvider={provider} /> : null} */}
-      {/* <div> */}
-        {/* <div>{editorRef ? <Toolbar editor={editorRef} /> : null}</div> */}
-        {/* <Avatars /> */}
-      {/* </div> */}
-      {/* <div> */}
+    const room = useRoom();
+    const [provider, setProvider] = useState<LiveblocksYjsProvider>();
+    const [editorRef, setEditorRef] = useState<editor.IStandaloneCodeEditor>();
+  
+    useEffect(() => {
+      let yProvider: LiveblocksYjsProvider;
+      let yDoc: Y.Doc;
+      let binding: MonacoBinding;
+  
+      if (editorRef) {
+        yDoc = new Y.Doc();
+        const yText = yDoc.getText("monaco");
+        yProvider = new LiveblocksYjsProvider(room, yDoc);
+        setProvider(yProvider);
+  
+        binding = new MonacoBinding(
+          yText,
+          editorRef.getModel() as editor.ITextModel,
+          new Set([editorRef]),
+          yProvider.awareness as unknown as Awareness
+        );
+      }
+  
+      return () => {
+        yDoc?.destroy();
+        yProvider?.destroy();
+        binding?.destroy();
+      };
+    }, [editorRef, room]);
+  
+    const handleOnMount = useCallback((e: editor.IStandaloneCodeEditor) => {
+      setEditorRef(e);
+    }, []);
+  
+    return (
+      <div className=" w-[100vw] h-[100vh]">
+        {provider && editorRef ? <Cursors yProvider={provider} editor={editorRef} /> : null}
         <Editor
           onMount={handleOnMount}
           height="100%"
@@ -71,7 +126,7 @@ export function CollaborativeEditor() {
             padding: { top: 20 },
           }}
         />
-      {/* </div> */}
-    </div>
-  );
-}
+      </div>
+    );
+  }
+  

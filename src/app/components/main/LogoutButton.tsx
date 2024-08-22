@@ -8,7 +8,7 @@ export default function LogoutButton() {
     async function signOut() {
         const supabase = createClient();
         const { error } = await supabase.auth.signOut();
-        console.log(error);
+        // console.log(error);
     }
 
   return (

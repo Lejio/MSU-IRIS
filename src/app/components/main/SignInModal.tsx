@@ -2,6 +2,7 @@ import React from 'react'
 import SignInHeader from './SignInHeader'
 import GoogleButton from './GoogleButton'
 import LogoutButton from './LogoutButton'
+import Link from 'next/link'
 
 export default function SignInModal() {
   return (
@@ -18,6 +19,7 @@ export default function SignInModal() {
             </span>
         </GoogleButton>
         <LogoutButton />
+        <Link href='/dashboard'>Dashboard</Link>
       </div>
     </div>
   )

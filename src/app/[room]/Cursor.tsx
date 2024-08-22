@@ -284,7 +284,7 @@ function Caret({ color, line, col }: CaretProps) {
         style={{
             position: "absolute",
             left: `${line}px`,
-            top: `${col + 2}px`,
+            top: `${col}px`,
             width: "2px", // Width of the caret
             height: "18px", // Height of the caret
             backgroundColor: color,

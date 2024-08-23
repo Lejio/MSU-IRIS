@@ -2,34 +2,34 @@
 import Link from "next/link";
 import React, { useState, useContext, createContext } from "react";
 import { IconChevronLeft } from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 
-const openContext = createContext(false);
+const OpenContext = createContext(false);
 
 export function DashboardSideBar({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleIconClick = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <openContext.Provider value={isOpen}>
+    <OpenContext.Provider value={isOpen}>
       <div
-        className={`flex flex-col justify-between h-full bg-slate-300 px-2 py-2 transition-all duration-300 ${
+        className={`flex flex-col justify-between h-full bg-slate-300 px-2 py-2 transition-all ease-in-out duration-300 ${
           isOpen
-            ? "md:max-w-[25vw] md:min-w-[25vw] lg:max-w-[15vw] lg:min-w-[15vw]"
-            : "md:max-w-[100px] md:min-w-[5vw] lg:max-w-[70px] lg:min-w-[3vw]"
+            ? "w-[25vw] lg:w-[15vw]" // Fixed widths for open state
+            : "w-[65px] lg:w-[70px]" // Fixed widths for closed state
         }`}
-        style={{ width: isOpen ? "auto" : "" }}
       >
         <div className="flex flex-col gap-5">
           <div className="flex items-center justify-between p-2">
-            {isOpen ? <IpsumLogo /> : null}
+            {isOpen && <IpsumLogo />}
             <IconChevronLeft
               onClick={handleIconClick}
               className={`cursor-pointer transition-transform duration-300 ${
@@ -43,39 +43,78 @@ export function DashboardSideBar({ children }: { children: React.ReactNode }) {
 
         <Footer />
       </div>
-    </openContext.Provider>
+    </OpenContext.Provider>
   );
 }
 
 export function DashboardSideBarItem({
+  className,
   logo,
   title,
   link,
 }: {
+  className?: string;
   logo: React.ReactNode;
   title: string;
   link: string;
 }) {
-  const isOpen = useContext(openContext);
+  const isOpen = useContext(OpenContext);
 
   return (
-    <HoverCard
-    openDelay={400}
-    >
+    <HoverCard openDelay={400} closeDelay={100}>
       <HoverCardTrigger
-      className="w-full rounded-md p-2 hover:bg-slate-400 flex items-center"
-      href={link}>
+        className={cn("w-full rounded-md p-2 hover:bg-slate-400 flex items-center", className)}
+        href={link}
+      >
         <div className="flex-shrink-0">{logo}</div>
         <div
-        className={`overflow-hidden transition-all duration-300 ${
+          className={`overflow-hidden transition-all duration-300 ${
             isOpen ? "w-auto opacity-100 ml-2" : "w-0 opacity-0"
-        }`}
+          }`}
         >
-        <p className="text-sm whitespace-nowrap">{title}</p>
+          <p className="text-sm whitespace-nowrap">{title}</p>
         </div>
       </HoverCardTrigger>
-      { isOpen ? null : <HoverCardContent className=" bg-slate-300 px-3 py-2" sideOffset={10} side="right">{title}</HoverCardContent> }
+      {isOpen ? null : (
+        <HoverCardContent
+          className=" bg-slate-300 px-3 py-2"
+          sideOffset={10}
+          side="right"
+        >
+          {title}
+        </HoverCardContent>
+      )}
     </HoverCard>
+  );
+}
+
+export function DashboardSideBarGroup({
+  children,
+  logo,
+  title,
+}: {
+  children: React.ReactNode;
+  logo: React.ReactNode;
+  title: string;
+}) {
+  const [isLowered, setIsLowered] = useState(false);
+  const isOpen = useContext(OpenContext);
+
+  return (
+    <div
+      className="hover:bg-slate-400 rounded-md"
+      onMouseEnter={() => setIsLowered(true)}
+      onMouseLeave={() => setIsLowered(false)}
+    >
+      <DashboardSideBarItem className=" p-0" logo={logo} title={title} link="#" />
+      <div
+        className={`flex flex-col transition-max-height duration-500 ease-in-out overflow-hidden ${
+          isLowered ? "max-h-screen" : "max-h-0"
+        }`}
+      >
+        {children}
+      </div>
+    </div>
   );
 }
 

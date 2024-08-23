@@ -67,3 +67,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+.transition-max-height {
+  transition: max-height 0.5s ease-in-out;
+}
+
+.max-h-0 {
+  max-height: 0;
+}
+
+.max-h-screen {
+  max-height: 1000px; /* or another large value that covers the expected height */
+}

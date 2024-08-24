@@ -24,7 +24,7 @@ export function DashboardSideBar({ children }: { children: React.ReactNode }) {
         className={`flex flex-col justify-between h-full bg-slate-300 px-2 py-2 transition-all ease-in-out duration-300 ${
           isOpen
             ? "w-[25vw] lg:w-[15vw]" // Fixed widths for open state
-            : "w-[65px] lg:w-[70px]" // Fixed widths for closed state
+            : "w-[65px] lg:w-[65px]" // Fixed widths for closed state
         }`}
       >
         <div className="flex flex-col gap-5">
@@ -77,7 +77,7 @@ export function DashboardSideBarItem({
       </HoverCardTrigger>
       {isOpen ? null : (
         <HoverCardContent
-          className=" bg-slate-300 px-3 py-2"
+          className=" bg-slate-300 px-2 py-1"
           sideOffset={10}
           side="right"
         >
@@ -92,13 +92,14 @@ export function DashboardSideBarGroup({
   children,
   logo,
   title,
+  className,
 }: {
   children: React.ReactNode;
   logo: React.ReactNode;
   title: string;
+  className?: string;
 }) {
   const [isLowered, setIsLowered] = useState(false);
-  const isOpen = useContext(OpenContext);
 
   return (
     <div
@@ -106,9 +107,9 @@ export function DashboardSideBarGroup({
       onMouseEnter={() => setIsLowered(true)}
       onMouseLeave={() => setIsLowered(false)}
     >
-      <DashboardSideBarItem className=" p-0" logo={logo} title={title} link="#" />
+      <DashboardSideBarItem className={cn("", className)} logo={logo} title={title} link="#" />
       <div
-        className={`flex flex-col transition-max-height duration-500 ease-in-out overflow-hidden ${
+        className={`flex flex-col transition-all duration-500 ease-in-out overflow-hidden ${
           isLowered ? "max-h-screen" : "max-h-0"
         }`}
       >

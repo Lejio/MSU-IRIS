@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@liveblocks/client": "^2.5.0",
-    "@liveblocks/node": "^2.5.0",
-    "@liveblocks/react": "^2.5.0",
-    "@liveblocks/yjs": "^2.5.0",
-    "@monaco-editor/react": "^4.6.0",
+    "@liveblocks/client": "^2.9.0",
+    "@liveblocks/node": "^2.9.0",
+    "@liveblocks/react": "^2.9.0",
+    "@liveblocks/yjs": "^2.9.0",
+    "@monaco-editor/react": "^4.5.1",
     "@nextui-org/react": "^2.4.6",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-hover-card": "^1.1.1",
@@ -26,7 +26,7 @@
     "framer-motion": "^11.3.29",
     "hono": "^4.5.11",
     "lucide-react": "^0.427.0",
-    "next": "14.2.5",
+    "next": "^14.2.16",
     "particle-api-js": "^10.5.1",
     "react": "^18",
     "react-dom": "^18",
@@ -34,10 +34,10 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.1",
-    "y-monaco": "^0.1.6",
+    "y-monaco": "^0.1.4",
     "y-protocols": "^1.0.6",
     "y-websocket": "^2.0.4",
-    "yjs": "^13.6.18"
+    "yjs": "^13.6.7"
   },
   "devDependencies": {
     "@types/node": "^20",

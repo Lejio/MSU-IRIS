@@ -67,3 +67,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+.yRemoteSelection {
+  @apply opacity-50 bg-[var(--user-color)] -mr-1;
+}
+
+/* Cursor caret */
+.yRemoteSelectionHead {
+  @apply absolute box-border h-full border-l-2;
+  border-color: var(--user-color); /* For dynamic color */
+}
+
+/* Cursor name */
+.yRemoteSelectionHead::after {
+  @apply absolute -top-[1.4em] -left-0.5 px-1.5 py-0.5 bg-[var(--user-color)] text-white rounded z-50 text-sm font-sans font-semibold;
+  line-height: normal;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}

@@ -11,7 +11,7 @@ export function Room({ children }: { children: ReactNode }) {
     <RoomProvider
       id={roomId}
       initialPresence={{
-        cursor: { line: 0, col: 0, x: 0, y: 0 },
+        cursor: null,
       }}
     >
       <ClientSideSuspense fallback={<div>Loading</div>}>{children}</ClientSideSuspense>

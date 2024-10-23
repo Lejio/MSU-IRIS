@@ -31,6 +31,7 @@ export function Cursors({ yProvider }: Props) {
     };
   }, [yProvider]);
 
+  
   // Insert awareness info into cursors with styles
   const styleSheet = useMemo(() => {
     let cursorStyles = "";

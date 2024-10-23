@@ -7,7 +7,11 @@ const MonacoEditor = dynamic(() => import('./components/MonacoEditor'), { ssr: f
 export default function page() {
   return (
     <div>
-      <MonacoEditor />
+      {/* <MonacoEditor /> */}
+      <a href="/test-room-2">
+      <div className=' m-5 w-20 h-20 border-solid border-black rounded-lg bg-slate-600'>
+      </div>
+      </a>
     </div>
   )
 }

@@ -12,7 +12,7 @@ export default async function page() {
     // }
     // console.log(user.data.user.user_metadata.full_name)
   return (
-    <div>
+    <div className=' h-[80vh] w-[90vw]'>
         <Room>
             <CollaborativeEditor />
         </Room>

@@ -1,8 +1,6 @@
 import React from 'react'
 // import MonacoEditor from './components/MonacoEditor'
-import dynamic from 'next/dynamic'
-
-const MonacoEditor = dynamic(() => import('./components/MonacoEditor'), { ssr: false, loading: () => <p>Loading...</p> })
+import ParticleTest from './components/ParticleTest'
 
 export default function page() {
   return (
@@ -12,6 +10,8 @@ export default function page() {
       <div className=' m-5 w-20 h-20 border-solid border-black rounded-lg bg-slate-600'>
       </div>
       </a>
+
+      <ParticleTest />
     </div>
   )
 }

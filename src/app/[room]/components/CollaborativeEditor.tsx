@@ -54,16 +54,19 @@ export function CollaborativeEditor() {
   return (
     <div className="flex flex-col relative rounded-lg bg-white w-full h-full text-gray-900 overflow-hidden">
       {provider ? <Cursors yProvider={provider} /> : null}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-row justify-between items-center">
         {/* <div>{editorRef ? <Toolbar editor={editorRef} /> : null}</div> */}
+        <div>
+        <a href="/dashboard">Back</a>
+        </div>
         <Avatars />
       </div>
-      <div className="relative flex-grow w-[100vw]">
+      <div className="relative flex-grow h-[100vh] w-[100vw]">
         <Editor
           onMount={handleOnMount}
           height="100%"
           width="900hw"
-          theme="vs-light"
+          theme="vs-dark"
           defaultLanguage="typescript"
           defaultValue=""
           options={{

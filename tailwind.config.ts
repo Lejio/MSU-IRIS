@@ -9,6 +9,9 @@ const config = {
     './src/**/*.{ts,tsx}',
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
 	],
+  compilerOptions: {
+    typeRoots: ["./node_modules/@types", "./src/types"],
+  },
   prefix: "",
   theme: {
     container: {

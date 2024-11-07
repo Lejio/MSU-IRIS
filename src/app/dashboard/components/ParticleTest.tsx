@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import axios from "axios";
 
 export default function ParticleTest() {
-//   const [signedUrl, setSignedUrl] = React.useState("");
   const [file, setFile] = React.useState<File>();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {

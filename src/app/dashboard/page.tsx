@@ -1,6 +1,8 @@
 import React from 'react'
 // import MonacoEditor from './components/MonacoEditor'
 import ParticleTest from './components/ParticleTest'
+import NewProjectSheet from './components/NewProjectSheet'
+import { Button } from '@nextui-org/react'
 
 export default function page() {
   return (
@@ -10,8 +12,8 @@ export default function page() {
       <div className=' m-5 w-20 h-20 border-solid border-black rounded-lg bg-slate-600'>
       </div>
       </a>
-
-      <ParticleTest />
+      <NewProjectSheet />
+      {/* <ParticleTest /> */}
     </div>
   )
 }

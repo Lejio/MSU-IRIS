@@ -1,7 +1,8 @@
 import type { Config } from "tailwindcss"
+import { nextui } from "@nextui-org/react"
 
 const config = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -9,9 +10,6 @@ const config = {
     './src/**/*.{ts,tsx}',
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
 	],
-  compilerOptions: {
-    typeRoots: ["./node_modules/@types", "./src/types"],
-  },
   prefix: "",
   theme: {
     container: {
@@ -28,10 +26,10 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
+        // primary: {
+        //   DEFAULT: "hsl(var(--primary))",
+        //   foreground: "hsl(var(--primary-foreground))",
+        // },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
@@ -79,7 +77,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@nextui-org/react")],
+  plugins: [require("tailwindcss-animate"), nextui()],
 } satisfies Config
 
 export default config
